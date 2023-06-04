@@ -9,14 +9,6 @@
             <Property name="text" type="java.lang.String" value="OPERACIONES"/>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="menuConsulta">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="CONSULTA"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuConsultaActionPerformed"/>
-              </Events>
-            </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="menuCaso">
               <Properties>
                 <Property name="text" type="java.lang.String" value="NUEVO CASO"/>
@@ -31,6 +23,14 @@
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuCierreActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="menuConsulta">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="CONSULTA"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuConsultaActionPerformed"/>
               </Events>
             </MenuItem>
           </SubComponents>

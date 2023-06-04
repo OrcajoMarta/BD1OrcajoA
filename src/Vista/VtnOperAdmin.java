@@ -40,9 +40,9 @@ public class VtnOperAdmin extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
-        menuConsulta = new javax.swing.JMenuItem();
         menuCaso = new javax.swing.JMenuItem();
         menuCierre = new javax.swing.JMenuItem();
+        menuConsulta = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         menuDesc = new javax.swing.JMenuItem();
         menuSalir = new javax.swing.JMenuItem();
@@ -54,14 +54,6 @@ public class VtnOperAdmin extends javax.swing.JFrame {
         getContentPane().add(jLabel1);
 
         jMenu1.setText("OPERACIONES");
-
-        menuConsulta.setText("CONSULTA");
-        menuConsulta.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuConsultaActionPerformed(evt);
-            }
-        });
-        jMenu1.add(menuConsulta);
 
         menuCaso.setText("NUEVO CASO");
         menuCaso.addActionListener(new java.awt.event.ActionListener() {
@@ -78,6 +70,14 @@ public class VtnOperAdmin extends javax.swing.JFrame {
             }
         });
         jMenu1.add(menuCierre);
+
+        menuConsulta.setText("CONSULTA");
+        menuConsulta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuConsultaActionPerformed(evt);
+            }
+        });
+        jMenu1.add(menuConsulta);
 
         jMenuBar1.add(jMenu1);
 

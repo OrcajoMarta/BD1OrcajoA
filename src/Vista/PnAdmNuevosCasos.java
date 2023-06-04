@@ -160,11 +160,8 @@ public class PnAdmNuevosCasos extends javax.swing.JPanel {
         if (txtCaso.getText().isEmpty() || cmbAbogados.getSelectedIndex() == 0 || txtTitulo.getText().isEmpty() || txtDesc.getText().isEmpty()) {
            JOptionPane.showMessageDialog(this, "Debe rellenar todos los campos", "Error", JOptionPane.ERROR_MESSAGE);  
         } else{ 
-            if(txtCaso.getText().length()>5 || txtCaso.getText().length()<5){
-            JOptionPane.showMessageDialog(this, "El código del caso debe contener 5 caracteres alfanumericos", "Error", JOptionPane.ERROR_MESSAGE);      
-            }
             
-          else if(operaciones.existeCaso(txtCaso.getText())){
+          if(operaciones.existeCaso(txtCaso.getText())){
                JOptionPane.showMessageDialog(this, "Ya existe un caso con ese código", "Error", JOptionPane.ERROR_MESSAGE);  
                txtCaso.setText("");
                txtCaso.requestFocus();

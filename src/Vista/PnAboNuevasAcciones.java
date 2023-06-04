@@ -170,10 +170,6 @@ public class PnAboNuevasAcciones extends javax.swing.JPanel {
                 error = 1;
                 mensajeError = "Debe rellenar todos los campos";
                 
-            }else if(txtAccion.getText().length()>3 || txtAccion.getText().length()<3){
-                error = 1;
-                mensajeError = "El código de acción debe contener 3 caracteres alfanumericos";
-
             }else if (operaciones.existeAccion(txtAccion.getText())){
                  error = 1;
                 mensajeError = "Ya existe una acción con ese código";
