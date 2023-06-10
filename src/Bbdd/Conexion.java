@@ -16,7 +16,10 @@ import java.sql.*;
 public class Conexion {
     Connection conexion;
 
- 
+    /**
+     * Método para registrar Driver
+     * @return resultado
+     */
     
     public int registrarDriver(){ 
         // METODO PARA REGISTRAR EL DRIVER DE MYSQL
@@ -25,14 +28,19 @@ public class Conexion {
             Class.forName("com.mysql.cj.jdbc.Driver"); //Buscame la clase con el nombre...
        resultado=0; // Si la encuentras... resultado=0
         } catch (ClassNotFoundException ex) { //Error clase no encontrada
-        // La siguiente linea es un mensaje con la informacion del error. Se puede poner un System.out.println   
+        // La siguiente línea es un mensaje con la información del error. Se puede poner un System.out.println   
         java.util.logging.Logger.getLogger(Conexion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         resultado=-1; // Si NO  la encuentras... resultado=-1
         }
         return resultado;
     }
     
-     public int conectar(String url){ 
+    /**
+     * Método para conectar a la BBDD
+     * @param url
+     * @return resultado
+     */
+    public int conectar(String url){ 
         
         int resultado;
      
@@ -51,8 +59,12 @@ public class Conexion {
         return resultado;
     }
      
-     
-     public int establecer(String url){
+    /**
+     * Método para establecer conexion con la BBDD
+     * @param url
+     * @return resultado
+     */
+    public int establecer(String url){
          int resultado;
          resultado=registrarDriver(); //Si es diferente a -1, lo ha encontrado
          if(resultado!=-1){ // Si el raesultado es diferente a -1...
@@ -61,21 +73,23 @@ public class Conexion {
          return resultado;
      }
     
+    /**
+     * Método para cerrar conexión
+     */
+    
     public void cerrar(){ 
-       // Método para quitar la conexion
+       // Método para quitar la conexión
         try {
             conexion.close();
         } catch (SQLException ex) {
             java.util.logging.Logger.getLogger(Conexion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        
+        }  
     }
 
+  
+    
     public Connection getConexion() {
         return conexion;
     }
-    
-    
-    
-    
-}
+     
+} //fin clase

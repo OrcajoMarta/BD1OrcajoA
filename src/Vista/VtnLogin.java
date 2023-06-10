@@ -132,13 +132,13 @@ public class VtnLogin extends javax.swing.JFrame {
 
         if (txtAlias.getText().isEmpty() || contra.isBlank()) {
 
-           JOptionPane.showMessageDialog(this, "No existe ningún usuario con ese login y contraseña", "Error", JOptionPane.ERROR_MESSAGE);
-           txtAlias.setText("");
-           pwdContra.setText("");
-           txtAlias.requestFocus();
-           
+            JOptionPane.showMessageDialog(this, "No existe ningún usuario con ese login y contraseña", "Error", JOptionPane.ERROR_MESSAGE);
+            txtAlias.setText("");
+            pwdContra.setText("");
+            txtAlias.requestFocus();
+
         } else {
-           
+
             contra = utilidades.Encriptar.getMD5(contra);
             Personal p = operaciones.existeUsuario2(txtAlias.getText(), contra);
             if (p != null) {
@@ -156,11 +156,11 @@ public class VtnLogin extends javax.swing.JFrame {
                     pack(); //Reorganízamelo
 
                 }
-            }else{
-                 JOptionPane.showMessageDialog(this, "No existe ningún usuario con ese login y contraseña", "Error", JOptionPane.ERROR_MESSAGE);
-           txtAlias.setText("");
-           pwdContra.setText("");
-           txtAlias.requestFocus();
+            } else {
+                JOptionPane.showMessageDialog(this, "No existe ningún usuario con ese login y contraseña", "Error", JOptionPane.ERROR_MESSAGE);
+                txtAlias.setText("");
+                pwdContra.setText("");
+                txtAlias.requestFocus();
             }
         }
 
@@ -168,10 +168,10 @@ public class VtnLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAceptarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-          txtAlias.setText("");
-           pwdContra.setText("");
-           txtAlias.requestFocus();
-        
+        txtAlias.setText("");
+        pwdContra.setText("");
+        txtAlias.requestFocus();
+
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     /**

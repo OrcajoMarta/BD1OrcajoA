@@ -24,7 +24,9 @@ String perfil;
         this.nombre = nombre;
     }
 
-
+    public Personal(String nombre) {
+        this.nombre = nombre;
+    }
 
     public Personal(String dni, String nombre, String login, String contra, String perfil) {
         this.dni = dni;

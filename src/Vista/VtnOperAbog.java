@@ -4,23 +4,35 @@
  */
 package Vista;
 
+import Bbdd.Conexion;
+import Bbdd.Operaciones;
 import Modelo.Personal;
 import java.awt.Color;
-
+import javax.swing.JOptionPane;
 
 public class VtnOperAbog extends javax.swing.JFrame {
 
-   Personal p;
-   PnAboNuevasAcciones panelAcc;
-   PnAboConsulta panelCons;
-   
+    Conexion conexion;
+    Operaciones operaciones;
+    Personal p;
+    PnAboNuevasAcciones panelAcc;
+    PnAboConsulta panelCons;
+
     public VtnOperAbog(Personal p) {
         initComponents();
-         this.p=p;
-       setTitle("Menú de " + p.getPerfil()); 
-         setSize(300, 300);
-         Color col = new Color(66, 76, 86); // Creamos un color y lo especificamos
+        this.p = p;
+        setTitle("Menú de " + p.getPerfil());
+        setSize(300, 300);
+        Color col = new Color(66, 76, 86); // Creamos un color y lo especificamos
         getContentPane().setBackground(col);
+        conexion = new Conexion();
+
+        if (conexion.establecer("jdbc:mysql://localhost:3306/bufeteOrcajoA") == -1) {
+            JOptionPane.showMessageDialog(null, "Errores en la base de datos");
+            System.exit(-1);
+        } else {
+            operaciones = new Operaciones(conexion);
+        }
     }
 
     /**
@@ -100,8 +112,8 @@ public class VtnOperAbog extends javax.swing.JFrame {
     }//GEN-LAST:event_menuDescActionPerformed
 
     private void menuSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuSalirActionPerformed
-          dispose(); // Elimina la ventana
-          System.exit(0); // Pon el sistema a 0
+        dispose(); // Elimina la ventana
+        System.exit(0); // Pon el sistema a 0
     }//GEN-LAST:event_menuSalirActionPerformed
 
     private void menuNuevasAccionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuNuevasAccionesActionPerformed
@@ -118,7 +130,7 @@ public class VtnOperAbog extends javax.swing.JFrame {
         pack();//Reorganizar
     }//GEN-LAST:event_menuConsultaActionPerformed
 
-       private void quitarPaneles() {
+    private void quitarPaneles() {
         try {
             this.getContentPane().remove(panelAcc);
         } catch (Exception ex) {
@@ -127,9 +139,9 @@ public class VtnOperAbog extends javax.swing.JFrame {
             this.getContentPane().remove(panelCons);
         } catch (Exception ex) {
         }
-     
+
     }
-   
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel2;

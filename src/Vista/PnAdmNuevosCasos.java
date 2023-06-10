@@ -34,6 +34,8 @@ public class PnAdmNuevosCasos extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "Errores en la base de datos");
             System.exit(-1);
         } else {
+            
+            /*COMBO*/
             modelo = new DefaultComboBoxModel();
             cmbAbogados.setModel(modelo);
             cargarAbogados();
@@ -66,6 +68,12 @@ public class PnAdmNuevosCasos extends javax.swing.JPanel {
         jLabel1.setText("NUEVOS CASOS");
 
         jLabel2.setText("COD_CASO");
+
+        txtCaso.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCasoKeyTyped(evt);
+            }
+        });
 
         jLabel3.setText("ABOGADO");
 
@@ -170,6 +178,7 @@ public class PnAdmNuevosCasos extends javax.swing.JPanel {
                Personal a;
                a=(Personal)cmbAbogados.getSelectedItem();
                operaciones.grabarCaso(txtCaso.getText(),a.getDni(),txtTitulo.getText(),txtDesc.getText(),"A");
+               operaciones.grabarAccion(txtCaso.getText(),"APE",utilidades.Fecha.FechaActualString(),"Apertura del caso");
                JOptionPane.showMessageDialog(this, "Caso " + txtCaso.getText() + " grabado", "Informacion", JOptionPane.INFORMATION_MESSAGE);
                limpiar();
            }
@@ -180,6 +189,13 @@ public class PnAdmNuevosCasos extends javax.swing.JPanel {
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         limpiar();
     }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void txtCasoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCasoKeyTyped
+        //PARA LIMITARLO A 5 NÚMEROS
+        if (txtCaso.getText().length() >= 5) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtCasoKeyTyped
 
     public void limpiar(){
         txtCaso.setText("");

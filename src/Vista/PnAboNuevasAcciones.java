@@ -23,7 +23,7 @@ public class PnAboNuevasAcciones extends javax.swing.JPanel {
     Operaciones operaciones;
     Personal p;
     DefaultComboBoxModel modelo;
-    ArrayList<Caso>casos;
+    ArrayList<Caso> casos;
 
     public PnAboNuevasAcciones(Personal p) {
         initComponents();
@@ -38,16 +38,19 @@ public class PnAboNuevasAcciones extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "Errores en la base de datos");
             System.exit(-1);
         } else {
+
             lblFecha.setText(utilidades.Fecha.FechaActualString());
-             modelo = new DefaultComboBoxModel();
+
+            /*COMBO*/
+            modelo = new DefaultComboBoxModel();
             cmbCasos.setModel(modelo);
             cargarCasosAbiertos();
         }
     }
-    
-        private void cargarCasosAbiertos() {
+
+    private void cargarCasosAbiertos() {
         modelo.addElement("Seleccione un caso");
-        casos=operaciones.casosAbiertosA(p.getDni());
+        casos = operaciones.casosAbiertosA(p.getDni());
         modelo.addAll(casos);
     }
 
@@ -76,6 +79,12 @@ public class PnAboNuevasAcciones extends javax.swing.JPanel {
         cmbCasos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jLabel3.setText("CODIGO ACCION");
+
+        txtAccion.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtAccionKeyTyped(evt);
+            }
+        });
 
         jLabel4.setText("FECHA");
 
@@ -160,56 +169,66 @@ public class PnAboNuevasAcciones extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-        
+
         int error = 0;
         String mensajeError = ""; // Configuro el mensaje de error 
         
-          try {
 
-            if (txtAccion.getText().isEmpty() || txtDesc.getText().isEmpty() || cmbCasos.getSelectedIndex()==0) {
-                error = 1;
-                mensajeError = "Debe rellenar todos los campos";
-                
-            }else if (operaciones.existeAccion(txtAccion.getText())){
-                 error = 1;
-                mensajeError = "Ya existe una acción con ese código";
-            }   
-                
-              if (error == 1) {
-                // Si alguno de los filtros anteriores ha modificado el valor de error a 1...
-                JOptionPane.showMessageDialog(this, mensajeError, "Error", JOptionPane.ERROR_MESSAGE);
+        if (cmbCasos.getSelectedIndex() != 0) {
 
-            } else {   
-      
-                int posicion=cmbCasos.getSelectedIndex();
-                operaciones.grabarAccion(casos.get(posicion-1).getCodCaso(),txtAccion.getText(),lblFecha.getText(),txtDesc.getText());
-                 JOptionPane.showMessageDialog(this, "Acción " + txtAccion.getText() + " asignada al caso " + casos.get(posicion-1).getCodCaso(), "Informacion", JOptionPane.INFORMATION_MESSAGE);
-                 limpiar();
-              }
-            
-            
-          }  catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, "Error en el proceso de Nueva acción", "Error", JOptionPane.ERROR_MESSAGE);
-            limpiar(); // Borra todos los campos
-            txtAccion.requestFocus(); // Código recupera el foco
+            try {
+                Caso c = (Caso) cmbCasos.getSelectedItem();
+                if (txtAccion.getText().isEmpty() || txtDesc.getText().isEmpty() || cmbCasos.getSelectedIndex() == 0) {
+                    error = 1;
+                    mensajeError = "Debe rellenar todos los campos";
+
+                } else if (operaciones.existeAccion(txtAccion.getText(), c.getCodCaso())) {
+                    error = 1;
+                    mensajeError = "Ya existe una acción con ese código";
+                }
+
+                if (error == 1) {
+                    // Si alguno de los filtros anteriores ha modificado el valor de error a 1...
+                    JOptionPane.showMessageDialog(this, mensajeError, "Error", JOptionPane.ERROR_MESSAGE);
+
+                } else {
+
+                    int posicion = cmbCasos.getSelectedIndex();
+                    operaciones.grabarAccion(casos.get(posicion - 1).getCodCaso(), txtAccion.getText(), lblFecha.getText(), txtDesc.getText());
+                    JOptionPane.showMessageDialog(this, "Acción " + txtAccion.getText() + " asignada al caso " + casos.get(posicion - 1).getCodCaso(), "Informacion", JOptionPane.INFORMATION_MESSAGE);
+                    limpiar();
+                }
+
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, "Error en el proceso de Nueva acción", "Error", JOptionPane.ERROR_MESSAGE);
+                limpiar(); // Borra todos los campos
+                txtAccion.requestFocus(); // Recupera el foco
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "No hay ningun caso seleccionado", "Error", JOptionPane.ERROR_MESSAGE);
         }
-            
+
     }//GEN-LAST:event_btnAceptarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-       limpiar();
+        limpiar();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
-private void limpiar(){
-    cmbCasos.setSelectedIndex(0);
-    txtAccion.setText("");
-    txtAccion.requestFocus();
-    txtDesc.setText("");
-}
-    
+    private void txtAccionKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtAccionKeyTyped
+        //PARA LIMITARLO A 3 NÚMEROS
+        if (txtAccion.getText().length() >= 3) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtAccionKeyTyped
 
-    
-    
+    private void limpiar() {
+        cmbCasos.setSelectedIndex(0);
+        txtAccion.setText("");
+        txtAccion.requestFocus();
+        txtDesc.setText("");
+    }
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAceptar;
     private javax.swing.JButton btnCancelar;

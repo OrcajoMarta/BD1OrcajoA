@@ -4,8 +4,11 @@
  */
 package Vista;
 
+import Bbdd.Conexion;
+import Bbdd.Operaciones;
 import Modelo.Personal;
 import java.awt.Color;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -13,6 +16,8 @@ import java.awt.Color;
  */
 public class VtnOperAdmin extends javax.swing.JFrame {
 
+    Conexion conexion;
+    Operaciones operaciones;
     Personal p;
     PnAdmNuevosCasos panelNuevosCasos;
     PnAdmCierre panelCierreCasos;
@@ -25,6 +30,14 @@ public class VtnOperAdmin extends javax.swing.JFrame {
         setSize(300, 300);
         Color col = new Color(66, 76, 86); // Creamos un color y lo especificamos
         getContentPane().setBackground(col);
+        conexion = new Conexion();
+
+        if (conexion.establecer("jdbc:mysql://localhost:3306/bufeteOrcajoA") == -1) {
+            JOptionPane.showMessageDialog(null, "Errores en la base de datos");
+            System.exit(-1);
+        } else {
+            operaciones = new Operaciones(conexion);
+        }
 
     }
 

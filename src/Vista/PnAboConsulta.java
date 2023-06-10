@@ -26,14 +26,13 @@ public class PnAboConsulta extends javax.swing.JPanel {
     Personal p;
     Conexion conexion;
     Operaciones operaciones;
-     DefaultComboBoxModel modeloCaso;
-      MiModeloDatos modeloA;
-     ArrayList<Caso>casos;
-    
+    DefaultComboBoxModel modeloCaso;
+    MiModeloDatos modeloA;
+    ArrayList<Caso> casos;
+
     public PnAboConsulta(Personal p) {
         initComponents();
-        this.p=p;
-       
+        this.p = p;
         Color col = new Color(253, 197, 76); // Creamos y especificamos un color
         setBackground(col);
 
@@ -44,28 +43,28 @@ public class PnAboConsulta extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "Errores en la base de datos");
             System.exit(-1);
         } else {
-            
-            
+            /*COMBO*/
             modeloCaso = new DefaultComboBoxModel();
             cmbCasos.setModel(modeloCaso);
             cargarCasos();
 
+            /*TABLA*/
             modeloA = new MiModeloDatos();
-            String[] titulosA = {"Código accion","Fecha","Descripcion"}; // Creamos un conjunto de titulos y le asignamos los nombres 
+            String[] titulosA = {"Código accion", "Fecha", "Descripcion"}; // Creamos un conjunto de titulos y le asignamos los nombres 
             modeloA.setColumnIdentifiers(titulosA);
             tblAcciones.setModel(modeloA);
 
         }
-        
+
     }
 
-     private void cargarCasos() {
+    private void cargarCasos() {
         modeloCaso.addElement("Seleccione un caso");
-        casos=operaciones.todosCasos(p.getDni());
+        casos = operaciones.todosCasos(p.getDni());
         modeloCaso.addAll(casos);
     }
-     
-         private void cargarAcciones(ArrayList<Accion> acciones) {
+
+    private void cargarAcciones(ArrayList<Accion> acciones) {
         for (Accion a : acciones) {
             /* for(tipo elemento:conjunto) es for each
              */
@@ -73,13 +72,13 @@ public class PnAboConsulta extends javax.swing.JPanel {
             v.add(a.getCodAccion());
             v.add(a.getFecha());
             v.add(a.getDescripcion());
-            
+
             modeloA.addRow(v); // te añado toda una fila completa  del elemento "v" (que cada dato puede ser de diferente tipo)
 
         }
     }
-         
-             private void borrarTbl() {
+
+    private void borrarTbl() {
         DefaultTableModel dm = (DefaultTableModel) this.modeloA;
         int rowCount = dm.getRowCount();
         // Borra las líneas una a una hasta el final de la tabla
@@ -87,7 +86,7 @@ public class PnAboConsulta extends javax.swing.JPanel {
             dm.removeRow(i);
         }
     }
-     
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -213,24 +212,31 @@ public class PnAboConsulta extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void cmbCasosItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbCasosItemStateChanged
-         
-        if(cmbCasos.getSelectedIndex()!=0){
-        
+
+        if (cmbCasos.getSelectedIndex() != 0) {
+
             borrarTbl();
-        
-         int posicion=cmbCasos.getSelectedIndex()-1;
-            Caso c=casos.get(posicion);
-            
+
+            int posicion = cmbCasos.getSelectedIndex() - 1;
+            Caso c = casos.get(posicion);
+
             lblTitulo.setText(c.getTitulo());
             lblDesc.setText(c.getDescripcion());
-            lblSituacion.setText(c.getSituacion());
-            cargarAcciones(operaciones.accionesAsignadas(c.getCodCaso()));  
+            lblSituacion.setText(transformarSituacion(c.getSituacion()));
+            cargarAcciones(operaciones.accionesAsignadas(c.getCodCaso()));
         }
-            
-      
+
+
     }//GEN-LAST:event_cmbCasosItemStateChanged
 
-
+    private String transformarSituacion (String situacion){
+        if ("C".equals(situacion)) {
+            situacion = "CERRADO";
+        } else {
+            situacion = "ABIERTO";
+        }
+        return situacion;
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> cmbCasos;
     private javax.swing.JLabel jLabel1;

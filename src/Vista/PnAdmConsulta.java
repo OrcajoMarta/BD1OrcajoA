@@ -43,15 +43,19 @@ public class PnAdmConsulta extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "Errores en la base de datos");
             System.exit(-1);
         } else {
+            
+            /*COMBO*/
             modeloAbog = new DefaultComboBoxModel();
             cmbAbogados.setModel(modeloAbog);
             cargarAbogados();
-
+            
+            /*TABLA CASOS*/
             modelo = new MiModeloDatos();
             String[] titulos = {"Código Caso"}; // Creamos un conjunto de titulos y le asignamos los nombres 
             modelo.setColumnIdentifiers(titulos);
             tblCasosAbiertos.setModel(modelo);
-
+            
+            /*TABLA ACCIONES*/
             modeloA = new MiModeloDatos();
             String[] titulosA = {"Código accion","Fecha","Descripcion"}; // Creamos un conjunto de titulos y le asignamos los nombres 
             modeloA.setColumnIdentifiers(titulosA);
@@ -159,7 +163,6 @@ public class PnAdmConsulta extends javax.swing.JPanel {
         jLabel4.setText("DESCRIPCION");
 
         lblTitulo.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        lblTitulo.setText("jLabel5");
 
         tblAcciones.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -175,7 +178,6 @@ public class PnAdmConsulta extends javax.swing.JPanel {
         jScrollPane3.setViewportView(tblAcciones);
 
         lblDesc.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        lblDesc.setText("jLabel5");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -189,17 +191,18 @@ public class PnAdmConsulta extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(36, 36, 36)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(42, 42, 42)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel3)
-                                    .addComponent(jLabel4)
-                                    .addComponent(lblTitulo)
-                                    .addComponent(lblDesc)))
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 410, Short.MAX_VALUE)
-                            .addComponent(cmbAbogados, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(cmbAbogados, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(42, 42, 42)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel3)
+                                        .addComponent(jLabel4)
+                                        .addComponent(lblDesc)
+                                        .addComponent(lblTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(53, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -216,8 +219,8 @@ public class PnAdmConsulta extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblTitulo)
-                        .addGap(24, 24, 24)
+                        .addComponent(lblTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lblDesc))

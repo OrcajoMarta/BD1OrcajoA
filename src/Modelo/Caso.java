@@ -9,12 +9,15 @@ package Modelo;
  * @author Marta
  */
 public class Caso {
-    
+
     String codCaso;
     String dni;
     String titulo;
     String descripcion;
     String situacion;
+
+    public Caso() {
+    }
 
     public Caso(String codCaso, String dni, String titulo, String descripcion, String situacion) {
         this.codCaso = codCaso;
@@ -49,9 +52,4 @@ public class Caso {
         return codCaso;
     }
 
-  
-    
-    
-    
-    
 }

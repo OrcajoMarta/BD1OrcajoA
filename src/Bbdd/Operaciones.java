@@ -22,6 +22,13 @@ public class Operaciones {
         this.bd = bd;
     }
 
+    /**
+     * Método para comprobar si existe usuario
+     *
+     * @param aliaS
+     * @param contrA
+     * @return resultado
+     */
     public boolean existeUsuario(String aliaS, String contrA) {
         boolean resultado = false;
         contrA = utilidades.Encriptar.getMD5(contrA);
@@ -43,6 +50,13 @@ public class Operaciones {
 
     }
 
+    /**
+     * Método para comprobar si existe usuario
+     *
+     * @param aliaS
+     * @param contrA
+     * @return p
+     */
     public Personal existeUsuario2(String aliaS, String contrA) {
 
         Personal p = null;
@@ -63,6 +77,11 @@ public class Operaciones {
         return p;
     }
 
+    /**
+     * Método para obtener todos los trabajadores con perfil abogado
+     *
+     * @return ArrayList
+     */
     public ArrayList<Personal> todosAbogados() {
 
         ArrayList<Personal> p = new ArrayList<>();
@@ -82,7 +101,13 @@ public class Operaciones {
         }
         return p;
     }
-    
+
+    /**
+     * Método para conseguir los casos de un determinado abogado
+     *
+     * @param dnI
+     * @return c
+     */
     public ArrayList<Caso> todosCasos(String dnI) {
 
         ArrayList<Caso> c = new ArrayList<>();
@@ -92,7 +117,7 @@ public class Operaciones {
             sentencia = bd.getConexion().prepareStatement(sql);
             ResultSet registros = sentencia.executeQuery();
             while (registros.next()) {
-                c.add(new Caso(registros.getString("codcaso"),dnI,
+                c.add(new Caso(registros.getString("codcaso"), dnI,
                         registros.getString("titulo"), registros.getString("descripcion"), registros.getString("situacion")));
             }
             registros.close();
@@ -103,6 +128,12 @@ public class Operaciones {
         return c;
     }
 
+    /**
+     * Método para comprobar si existe un caso
+     *
+     * @param codCaso
+     * @return resultado
+     */
     public boolean existeCaso(String codCaso) {
         boolean resultado = false;
 
@@ -123,14 +154,23 @@ public class Operaciones {
 
     }
 
+    /**
+     * Método para grabar caso nuevo
+     *
+     * @param codCaso
+     * @param dniA
+     * @param tit
+     * @param desc
+     * @param sit
+     * @return resultado
+     */
     public int grabarCaso(String codCaso, String dniA, String tit, String desc, String sit) {
         int resultado = 0;
         String sql;
         PreparedStatement sentencia;
-        //Si existe el usuario, no se puede modificar, solo consultar
+
         if (!existeCaso(codCaso)) { //Si NO EXISTE
 
-            // "INSERT INTO usuario (login,nombre) values ('"login"', '"nombre"')";  
             sql = "INSERT INTO tblcasos(codcaso,dni,titulo,descripcion,situacion) values ('"
                     + codCaso + "','" + dniA + "','" + tit + "','" + desc + "','" + sit + "')";
 
@@ -148,15 +188,23 @@ public class Operaciones {
 
         return resultado;
     }
-    
-       public int grabarAccion(String codCaso, String codAcc, String fech, String desc) {
+
+    /**
+     * Método para grabar acción nueva
+     *
+     * @param codCaso
+     * @param codAcc
+     * @param fech
+     * @param desc
+     * @return resultado
+     */
+    public int grabarAccion(String codCaso, String codAcc, String fech, String desc) {
         int resultado = 0;
         String sql;
         PreparedStatement sentencia;
-        //Si existe el usuario, no se puede modificar, solo consultar
-        if (!existeAccion(codAcc)) { //Si NO EXISTE
 
-            // "INSERT INTO usuario (login,nombre) values ('"login"', '"nombre"')";  
+        if (!existeAccion(codAcc, codCaso)) { //Si NO EXISTE
+
             sql = "INSERT INTO tblacciones(codcaso,codaccion,fecha,descripcion) values ('"
                     + codCaso + "','" + codAcc + "','" + fech + "','" + desc + "')";
 
@@ -175,6 +223,11 @@ public class Operaciones {
         return resultado;
     }
 
+    /**
+     * Método para obtener todos casos que estén abiertos
+     *
+     * @return
+     */
     public ArrayList<Caso> casosAbiertos() {
 
         ArrayList<Caso> casos = new ArrayList<>();
@@ -193,8 +246,14 @@ public class Operaciones {
         }
         return casos;
     }
-    
-        public ArrayList<Caso> casosAbiertos(String dniA) {
+
+    /**
+     * Método para obtener los casos abiertos de un abogado en concreto
+     *
+     * @param dniA
+     * @return
+     */
+    public ArrayList<Caso> casosAbiertos(String dniA) {
 
         ArrayList<Caso> casos = new ArrayList<>();
         String sql = "select * from tblcasos where dni in ('" + dniA + "') and situacion in ('A')";
@@ -213,6 +272,12 @@ public class Operaciones {
         return casos;
     }
 
+    /**
+     * Método para cerrar un caso
+     *
+     * @param codC
+     * @return resultado
+     */
     public int cerrarCaso(String codC) {
         int resultado = 0;
         PreparedStatement sentencia;
@@ -228,6 +293,11 @@ public class Operaciones {
         return resultado;
     }
 
+    /**
+     * Método para obtener los abogados con casos abiertos
+     *
+     * @return a
+     */
     public ArrayList<Personal> abogadosConCasosAbiertos() {
 
         ArrayList<Personal> a = new ArrayList<>();
@@ -247,8 +317,14 @@ public class Operaciones {
         }
         return a;
     }
-    
-        public  ArrayList<Caso> casosAbiertosA(String dniA) {
+
+    /**
+     * Método para obtener los casos que estén abiertos
+     *
+     * @param dniA
+     * @return
+     */
+    public ArrayList<Caso> casosAbiertosA(String dniA) {
 
         ArrayList<Caso> c = new ArrayList<>();
         String sql = "select * from tblcasos where situacion in ('A') and dni ='" + dniA + "'";
@@ -257,11 +333,11 @@ public class Operaciones {
             sentencia = bd.getConexion().prepareStatement(sql);
             ResultSet registros = sentencia.executeQuery();
             while (registros.next()) {
-             
-              c.add(new Caso(registros.getString("codcaso"),dniA,
-                        registros.getString("titulo"),registros.getString("descripcion"),
+
+                c.add(new Caso(registros.getString("codcaso"), dniA,
+                        registros.getString("titulo"), registros.getString("descripcion"),
                         "A"));
-               
+
             }
             registros.close();
 
@@ -270,8 +346,14 @@ public class Operaciones {
         }
         return c;
     }
-        
-            public ArrayList<Accion> accionesAsignadas(String codCasO) {
+
+    /**
+     * Método para obtener las acciones asignadas a un caso
+     *
+     * @param codCasO
+     * @return a
+     */
+    public ArrayList<Accion> accionesAsignadas(String codCasO) {
 
         ArrayList<Accion> a = new ArrayList<>();
         String sql = "select * from tblacciones where codcaso ='" + codCasO + "'";
@@ -280,10 +362,10 @@ public class Operaciones {
             sentencia = bd.getConexion().prepareStatement(sql);
             ResultSet registros = sentencia.executeQuery();
             while (registros.next()) {
-             
-              a.add(new Accion(codCasO,registros.getString("codaccion"),registros.getString("fecha"),
-                      registros.getString("descripcion")));
-               
+
+                a.add(new Accion(codCasO, registros.getString("codaccion"), registros.getString("fecha"),
+                        registros.getString("descripcion")));
+
             }
             registros.close();
 
@@ -291,13 +373,18 @@ public class Operaciones {
             Logger.getLogger(Operaciones.class.getName()).log(Level.SEVERE, null, ex);
         }
         return a;
-    }  
-             
-        
-         public boolean existeAccion(String codA) {
+    }
+
+    /**
+     * Método para comprobar si ya existe una acción
+     *
+     * @param codA
+     * @return resultado
+     */
+    public boolean existeAccion(String codA, String codCaso) {
         boolean resultado = false;
 
-        String sql = "select codaccion from tblacciones where codaccion ='" + codA + "'";
+        String sql = "select codaccion from tblacciones where codaccion ='" + codA + "' and codcaso ='" + codCaso + "'";
         PreparedStatement sentencia;
 
         try {
@@ -312,10 +399,26 @@ public class Operaciones {
 
         return resultado;
 
-    }       
-             
-             
-             
-        
+    }
 
-}
+    public Personal dimeNombreAbogado(String dni) {
+
+        Personal a = null;
+
+        String sql = "select nombre from tblpersonal where dni ='"+dni+"'";
+        PreparedStatement sentencia;
+        try {
+            sentencia = bd.getConexion().prepareStatement(sql);
+            ResultSet registros = sentencia.executeQuery();
+            while (registros.next()) {
+                a = new Personal(registros.getString("nombre"));
+            }
+            registros.close();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(Operaciones.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return a;
+    }
+
+} //fin operaciones
